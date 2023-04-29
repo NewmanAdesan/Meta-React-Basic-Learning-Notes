@@ -1,0 +1,145 @@
+
+
+Course Goals:
+
+    - Develop a working familiarity with a BASIC STRUCTURE and USE
+      of the React.js library.
+
+    - Explore the concepts and practical use of `state and state management` 
+      
+    - Discover how to set up `navigation` and make use of `assets`
+      in your React apps.
+
+
+
+
+
+
+
+
+
+
+Course RoadMap:
+
+    COMPONENT & COMPOSABILITY
+      - Building Modern UI using concepts of component & composability
+      - a website UI is simply a combination of components
+      - React is so popular because it streamlines
+      - the process of building & composing component.
+      - doing this efficiently & withou significat impace
+        on the browsers resources.
+
+
+    STATE IN REACT APPS
+      - State is simply all the values of all the variables your app 
+        is working with at any given point in time. 
+
+    
+    STYLING YOUR REACT APPS
+      - Reuse of common styles. 
+      - Setting up event handling on your apps (clicks & user-submitted data)
+      - Creating navigation routes and using assets.
+
+
+
+
+
+
+
+
+
+
+Module 1:
+
+    CONCEPTS
+      - what is React, Why React and Where it is used
+      - setting up React coding environment
+      - how to build components
+      - how to compose layouts by importing components into other components.
+      - how to pass data from one component to another. 
+      - how the JSX syntax work
+
+    
+    MODULE-GOALS
+      - explain the concepts behind React and component architecture.
+      - describe how to use assets within an app to apply styling and 
+        how to usefunctional components.
+      - create a component to service a specific purpose.
+      - create a folder and demonstrate how to create and import files  
+        within that folder.
+      - use and manipulate `props` and `components` to effect visual results.
+
+
+
+
+
+
+
+
+
+
+Module 2 - Data and State:
+
+    CONCEPTS
+      - how events work and how you can handle them in React
+      - how to deal with errors related to events in React
+
+
+    MODULE-GOALS
+      - use common methods to manage state in React
+      - detail the concept and nature of state and state change
+      - describe the hierarchical flow of data in React
+      - describe how data flows in both stateful and stateless component
+      - use an event to dynamically change content on a webpage
+      - describe some common errors associated with events
+        and the syntax required to handle them.
+
+
+
+
+
+
+
+
+
+
+Module 3 - Navigation and Asset:
+
+    LESSON
+      - you will learn about routing and navigation in React
+      - you will learn how to render partial views
+      - you will learn how to update routes in you React apps
+      - you will understan how assets are used, bundled and embedded
+
+
+    MODULE-GOALS
+      - use media assets, such as video and audio, with React
+      - Demonstrate how to manipulate image assets using reference paths
+      - Explain the folder structure of a React project
+        in terms of embedded or referenced assets
+      - demonstrate the conditional implementation and 
+        rendering of multiple components.
+      - create and implement a route in the form of a navbar
+      - describe navigation design in React, 
+        with a focus on single and multi-page navigation
+
+
+
+
+
+
+
+
+
+
+Module 3 - Calculator App:
+    - Synthesize the skills from this course 
+      to create and style a React component.
+    - Reflect on this course's content and on the learning path 
+      that lies ahead.
+    
+
+
+
+
+    
