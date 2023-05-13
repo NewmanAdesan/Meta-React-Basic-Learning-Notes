@@ -1,0 +1,444 @@
+
+
+
+
+React and SPA:
+  - single page application is a one page website
+  - page content changes based on user interaction, with no need of reload.
+
+  - React library help build SPA. this offers
+  - Rich User interfaces, speed, scalability and flexibility.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+React Component Based Architecture:
+
+    COMPONENT BASED ARCHITECTURE ( the idea )
+        - this involves buiding software based on reusable component of code.
+        - each component consists of well defined functionality 
+          that can be inserted into an application, 
+          without requiring modification of other component.
+
+
+    COMPONENT BASED ARCHITECTURE ( reusability )
+        - this components can be used multiple times
+        - and easily inserted anywhere where needed.
+
+
+    COMPONENT BASED ARCHITECTURE ( independence )
+        - this involves components that can exist within the same space
+        - independent from each other.
+        - this concepts fosters teamwork. 
+          different developers efficiently on a project
+
+          [](2-2A.jpg)
+
+
+    COMPONENT BASED ARCHITECTURE ( composition )
+        - all UI is composed of simple component 
+        - that can be combined into more complex component.
+
+
+      COMPONENT BASED ARCHITECTURE ( before react )
+        - before react, you could still build components style layouts. 
+        - however, it involved much more complicated 
+          DOM manipulations and code, 
+        - making it harder to work with (spagetti code).
+
+        - reacts prevents this spaghetti code 
+        - by avoiding any manipulation of the DOM. 
+        - instead, react provide something known as the virtual DOM. 
+        - you may recall that this is an in-memory representation or clone 
+        - of the real DOM which minimizes updates to the DOM itself. 
+          
+        - react uses the virtual DOM 
+        - to update the browser DOM only when needed. 
+        - this ensures that the update is as minimal as possible, 
+        - increasing the application speed and performance.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The Root Component:
+
+    THE ROOT COMPONENT
+        - In the default React application, only one component is rendered.
+        - it's the app components located inside the index.js file 
+        - that's located inside the source folder.
+
+        [](2-3B.jpg)
+
+        - it's important to know that every React app 
+        - must contain at least one component, 
+        - and it's called the `root components`.
+        - this component is loaded using the import statement
+
+        [](2-3C.jpg)
+
+
+
+    THE ROOT COMPONENT
+        - the roots components can contain other components 
+        - that developers create to represent the various UI part 
+          of the application.
+        - in this case, we are rendering the App component 
+          in the root component.  
+
+        [](2-3D.jpg)
+
+        - recall that this component is ultimately converted 
+        - to a DOM fragment and placed into the existing DOM 
+        - as a child of the HTML div element with an ID of roots. 
+        - this div element is then rendered to the browser. 
+
+        - if you analyze the app component,
+        - you will notice that it looks very similar
+          to a javascript function with some html code in it.
+
+        [](2-3F.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Creating Functional Component:
+
+    CREATING FUNCTIONAL COMPONENT ( two componet types )
+      - there are two types of component in React
+      - functional components and class components
+      - we will discuss class components later on.
+      - we will discuss functional components now.
+
+      [](2-3A.jpg)
+
+
+    
+    CREATING FUNCTIONAL COMPONENT ( basics )
+      - React is scripted using a special syntax called JavaScript XML or JSX.
+      - JSX allows you to write javascript code in what looks like html element.
+      - this allows you make you webside dynamic.
+      - it is place in the return statement of a functional component.
+
+      - Note that a React Component wont render 
+      - until it is used as a JSX element. like `<App />`
+      - similar to how a JavaScript function declaration won't run 
+      - until it's called or invoked. like `App()`
+
+
+    
+    CREATING FUNCTIONAL COMPONENT ( steps )
+      - lets explore the steps involved to create a react component
+      - which will contain some JSX code inside an h1 html element
+      - to display some text on a webpage
+
+      * First, you create the component,
+        which is basically just a javascript file `Heading.js`
+        capitalizing the component name like so 
+        helps React to distinguish JSX element for HTML element.
+
+      * Next, inside the Heading.js, create a function called `Heading()`
+
+      [](2-3G.jpg)
+
+
+    
+    CREATING FUNCTIONAL COMPONENT ( typical example )
+      - dowload the react library and set up the react application
+      - `npm init react-app .`
+      - `npm start`
+      - `navigate to src/App.js`
+      - `create a function Header()`
+        which returns a JSX simply <h1>Hello world</h1>
+      - `delete the body of the App function,
+         render the Header Component in the App Component`
+      - `save and reload the page`
+
+            function Header(){
+              return <h1>Hello world</h1>;
+            }
+
+            function App(){
+              return <Header />;
+            }
+
+            export default App;
+
+      - at the moment, the header component code 
+      - exists in the same file as the app component. 
+      - to make the header component isolated and reusable, 
+      - I need to place it in its own file. 
+      - then I can reuse it multiple times in the application 
+      - anytime I want to display a heading element with some texts.
+
+      - the overall syntax instructs React 
+      - to render the heading HTML element with whatever text value 
+      - that is stored within the variable named title. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Transpiling:
+
+    TRANSPILING ( basic idea )
+      - for React code to be understood by a browser, 
+      - you need to have a transpiling step 
+      - in which the JSX code gets converted to plain JavaScript code 
+      - that a modern browser can work with.
+
+      - an example of a common transpiling technology is BABEL
+      - it allows you to transpile JSX code into plain javascript code.
+      - babel has an online tool that helps you see 
+      - the difference btw the initial code and the transpiled code 
+
+
+
+    TRANSPILING ( babel in action )
+      - Transpiling Component declaration
+        function Heading(props){                 "use strict"
+          return <h1>{props.title}</h1>   ==>    function Heading(props) {
+        }                                          return React.createElement("h1", null, props.title);
+                                                 }
+
+      - Transpiling Component rendering
+        <Heading>Hello world</Heading>    ==>     "use strict
+                                                  React.createElemeent("Heading", {"title":"Hello world"});
+
+      - the first argument depicts the DOM element to render
+      - the second argument depicts the DOM element attributes
+      - the third argument depicts the innerHTML of the DOM element
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+React Folder Structure:
+
+    REACT FOLDER STRUCTURE ( default list )
+      - node_modules/
+      - public/
+      - src/
+      - .gitignore
+      - package.json
+      - package-loc.json
+      - README.md
+
+
+    REACT FOLDER STRUCTURE ( node_modules folder )
+      - think of it as the repository for all the modules in your REACT App
+      - this is where the external packages used on your project are stored.
+
+
+    REACT FOLDER STRUCTURE ( public folder )
+      - favicon file
+      - image files for logos
+      - robots.txt file
+      - manifest.json file
+      - index.html
+
+      - index.html is the most important.
+      - a React app gets injected into the specific elements 
+      - inside the body of the index HTML file. 
+      - based on changes happening inside our React app, 
+      - it injects those updates in that same div of index HTML
+
+      - robots.txt file is used for search engine optimization
+
+      - manifest.json file is used to provide some metadata
+      - to a device when your React powered web app is installed on it.
+
+
+    REACT FOLDER STRUCTURE ( src folder )
+      - this folder contains all the essential component files 
+      - required to ensure that a React app functions.
+
+      - index.js, index.css
+      - App.js, App.css
+      - App.test.js, setupTests.js, reportsWebVitals.js
+      - logo.svg
+
+      - index.js file imports everything that this React App
+      - needs to render a working Reack Application.
+
+
+
+    REACT FOLDER STRUCTURE ( gitignore file )
+      - the .gitignore file is using version control and 
+      - it's used to specify what files and folders must be excluded from a project.
+
+
+    REACT FOLDER STRUCTURE ( readme file )
+      - markdown file that gives some basic information on this project.
+      - developers use this when they want to share the project's code on sites like GitHub
+
+
+    REACT FOLDER STRUCTURE ( package & package-loc files )
+      - package.json file lists information pertaining to my app, 
+      - which allows npm to run several scripts 
+      - and perform various tasks in the app itself.
+
+      - the package-loc.json file holds the list 
+      - of all dependencies with a specific versions.
+
+      - the package.json file helps npm rebuild the app on another machine. 
+      - or if we delete the node modules folder with all the files that our project needs to run, 
+      - the package-loc.json file has all the information 
+      - for npm to be able to rebuild those files reliably.
+
+      - this file is there to ensure the npm tracks 
+      - all the modules installations properly.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+React Project Methodlogy:
+
+  CUSTOMIZING ( the task )
+    - say you need to build a simple typography-focused layout for a coding blog.
+    - and the layout you're supposed to build 
+    - will consist of the following sections:
+
+    - Main navigation 
+    - Promo (main advertisement)
+    - A list of newest posts' previews (intros)
+    - The footer
+
+    - Keeping in mind the above structure, 
+    - how would you organize your code?
+
+
+  CUSTOMIZING ( organizing your code )
+    - Keeping in mind the above structure, 
+    - how would you organize your code?
+    - this is where React docs can help. they suggest two approaches:
+        * Grouping by features 
+        * Grouping by file type 
+
+    - they also advise not to nest folders too deep, 
+    - and to keep things simple and not overthink it.
+
+    - they even say that if you're just starting out, 
+    - you shouldn't spend more than five minutes setting up a project
+
+
+  CUSTOMIZING ( design )
+    - taking this advice into account, 
+    - you might say that for a small project like this, 
+    - you could keep it as simple as 
+    
+    - just adding a components folder 
+    - and moving all your components into it. 
+    - this is exactly what you’ll do next.
+
+
+  CUSTOMIZING ( building the app )
+    - lets pick a name for the app "example-app"
+    - we run this command in a suitable folder
+      " npm init react-app example-app "
+
+    - next is to edit the src folder based on the our design
+        src/
+            component/
+            App.js
+            App.test.js
+            index.css
+            index.js
+            logo.svg
+            reportWebVitals.js
+            setupTests.js
+
+        components/
+            Nav.js
+            Promo.js
+            Intro1.js
+            Intro2.js
+            Intro3.js
+            Footer.js
+
+    - notice how we didn't complicate things
+    - at this point, there's no need to complicate things.
+    - this means you've fully planned the app, 
+    - based on some best practices as suggested by the official React docs website, and 
+    - based on the level of complexity of the project itself.
+        
+
+
+
+  CUSTOMIZING ( building the components )
+    - Sincee all the functional component files are all currently empty,
+    - lets start adding contents to them one by one.
+
+
+  CUSTOMIZING ( notes about the jsx syntax )
+
+
+
+
+
+
+      
+
