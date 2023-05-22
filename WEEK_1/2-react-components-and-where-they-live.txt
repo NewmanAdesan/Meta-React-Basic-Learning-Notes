@@ -357,6 +357,12 @@ React Folder Structure:
 
 React Project Methodlogy:
 
+  CUSTOMIZING ( objectives )
+    - basic design principle for a react project
+    - some differences between JSX and HTML
+
+
+
   CUSTOMIZING ( the task )
     - say you need to build a simple typography-focused layout for a coding blog.
     - and the layout you're supposed to build 
@@ -432,13 +438,183 @@ React Project Methodlogy:
     - Sincee all the functional component files are all currently empty,
     - lets start adding contents to them one by one.
 
+    [ The Nav Component ](2-7A.jpg)
+    [ The Promo Component ](2-7B.jpg)
+    [ The Intro1 Component ](2-7C.jpg)
+    [ The Intro2 Component ](2-7D.jpg)
+    [ The Intro3 Component ](2-7E.jpg)
+    [ The Footer Component ](2-7F.jpg)
+
+
 
   CUSTOMIZING ( notes about the jsx syntax )
+    - why use the "className" attribute?
+        do not forget at the end of the day
+        JSX is javascript code and not HTML
+        thus, the "class" us a reserved keyword
+
+    
+    - why use Intro1.js, Intro2.js, Intro3.js?
+    - isn't one of the tenets of coding the DRY
+    - Do not Repeat Yourself Approach?
+        there are still a few concepts to discuss
+        before you learn how to re-use 
+        a single component with variations in its content.
+        
+        this has to do with data in components, 
+        but don’t worry, we’ll be getting to that later.
+
+    
+    - why not use the <a> element for empty links? 
+        the answer here depends on whether 
+        those links are "internal" - inside an app, 
+        or "external", meaning, leading to some external link, such as https://www.coursera.org.
+
+        if the links are internal to the app 
+        as they are envisioned here
+        using the <a> tag is simply not the React way of doing things. 
+        you'll learn why that is the case 
+        when discussing the use of React Router.
+
+
+    - where are all the props?
+        this concept will taught in the next lesson
+        "Component Use and Styling". 
+        
+        in this lesson, you’ll see in practice 
+        how you can make components work better, 
+        with the help of props.
 
 
 
 
 
 
+
+
+
+
+
+
+
+
+
+Component Communication:
+
+    COMPONENT COMMUNICATION ( objectives )
+      - demonstrate the import statement
+      - create a component file
+      - import component
+
+
+    COMPONENT COMMUNICATION ( modular programming )
+      - remember the Modules concept in javascript
+      - they are standalone units of code 
+        that you can reuse again and again
+
+      - being standalone means that you can
+        add them to your programs, remove them, 
+        and replace them with other modules
+        and everything will still work.
+
+      - it makes it easier to think of modules as javascript files
+
+      - react uses this javascript feature 
+        to separate your components 
+        by placing them in their own file. 
+        then you can use the import and export statements 
+        to make the files communicate with each other
+
+
+    COMPONENT COMMUNICATION ( export statement )
+      - in order to make the function & variables in the modules
+        available to others, you need to export them.
+
+      - there are two types of export statement
+      - "default export" and "named export"
+
+      - default export are used 
+      - when the function name is the same as file name.
+            "export default component_name"
+
+      - named export are used 
+      - when you want the function name different from file name.
+            "export {component_name}"
+
+      - a module may have at most one default export
+        and as many named exports as you like.
+
+
+    COMPONENT COMMUNICATION ( import statement )
+      - in React, you import components 
+      - into your application using the import statements.
+            "import component_name from "./file_name"
+
+
+    COMPONENT COMMUNICATION ( absolute import )
+      - you can configure your application 
+      - to support importing modules using absolute paths. 
       
+      - this can be done by configuring a jsconfig.json
+        or tsconfig.json file in the root of your project. 
+
+      - below is an example jsconfig.json file for a JavaScript project.
+            "
+              {
+                "compilerOptions": {
+                  "baseUrl": "src"
+                },
+                "include": ["src"]
+              }
+            "
+      - now that you've configured your project 
+      - to support absolute imports, if you want to import 
+      - a module located at src/components/Button.js, 
+      - you can import the module like so:
+            " import Button from 'components/Button'; "
+
+      - if you're using TypeScript in your project, 
+      - you will already have a tsconfig.json file.
+      - you can configure the baseUrl setting 
+      - inside the compilerOptions of your project's tsconfig.json file.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Additional Resources - Flex Basos:
+
+    FLEXBOX ( the concept of available space --> flex-grow)
+      - distributing the available space into the items (adding to the size of item)
+        with properties like flex-basis, flex-grow, flex-shrink
+
+      - distributing the availble space to be between the items
+        with properties like "align-items", "justify-content" 
+
+    FLEXBOX ( the concept of available space --> flex-grow)
+      - the flex-grow property specifies if & how
+      - an item should grow to occupy the avaliable space.
+      - different values specifies how the available spaces will be allocated.
+      - basically we are adding space to the size of the item.
+
+
+    FLEXBOX ( the concept of available space --> flex-shrink)
+      - the flex-shrink property sets items to shrink instead of overflowing.
+      - different values can be assigned in order 
+      - to cause one item to shrink faster than others.
+
+
+    FLEXBOX ( the concept of available space --> flex-basis)
+      - this determines the default size of the flex item.
+
 

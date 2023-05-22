@@ -1,0 +1,175 @@
+
+Introduction:
+    - a component is a piece of UI that has its own logic and apperance.
+    - react component are javascript functin that return markup.
+    - react component names must always start with capital letters.
+      thats how you differentiate them from HTML tags.
+
+    - the markup returned by a React component could be pure HTML or could be JSX.
+    - with JSX (javasript XML) you can embed javascript in the pure HTML
+
+    - JSX is stricter than pure HTML.
+      your component cannot return multiple JSX tags.
+      you have to wrap them in a shared parent e.g <div></div> OR <></>
+
+
+
+
+
+
+
+
+
+
+
+
+
+Conditional Rendering:
+
+    VERSION 1
+        let content;
+        if (isLoggedIn) content=<AdminPanel />;
+        else content=<LoginForm />;
+        return (
+            <div>
+                {content}
+            </div>
+        )
+
+
+    VERSION 2
+        return (
+            <div>
+                {isLoggedIn ? <AdminPanel /> : <LoginForm />}
+            </div>
+        )
+
+
+    VERSION 3
+        // useful when having only one option
+        return (
+            <div> {isLoggedIn && <AdminPanel />} 
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+Rendering List:
+
+        const products = [
+            { title: 'Cabbage', id: 1 },
+            { title: 'Garlic', id: 2 },
+            { title: 'Apple', id: 3 },
+        ]
+
+        const listItems = products.map(product =>
+            <li key={product.id}>
+                {product.title}
+            </li>
+        );
+
+        return (
+            <ul>{listItems}</ul>
+        );
+    
+    - for each item in a list, you should pass a string or a number 
+      that uniquely identifies that item among its siblings. 
+      notice the "key" props.
+        )
+
+
+
+
+
+
+
+
+
+
+
+
+
+Updating the Screen:
+
+    - Often, you’ll want your component to “remember” some information and display it.
+    - to do this, add state to your component using the "useState" function.
+        const [count, setCount] = useState(5);
+
+
+
+
+
+
+
+
+
+
+
+
+
+Using Hooks:
+
+    - functions starting with use are called Hooks. 
+    - useState is a built-in Hook provided by React. 
+    - you can find other built-in Hooks in the API reference. 
+    - you can also write your own Hooks by combining the existing ones.
+
+    - hooks are more restrictive than other functions. 
+    - you can only call Hooks at the top of your components (or other Hooks). 
+    - if you want to use useState in a condition or a loop, 
+      extract a new component and put it there.
+
+
+
+
+
+
+
+
+
+
+
+
+
+Sharing Data Between Component:
+
+        import { useState } from 'react';
+
+        export default function MyApp() {
+            const [count, setCount] = useState(0);
+
+            function handleClick() {
+                setCount(count + 1);
+            }
+
+            return (
+                <div>
+                <h1>Counters that update together</h1>
+                <MyButton count={count} onClick={handleClick} />
+                <MyButton count={count} onClick={handleClick} />
+                </div>
+            );
+        }
+
+
+        function MyButton({ count, onClick }) {
+            return (
+                <button onClick={onClick}>
+                Clicked {count} times
+                </button>
+            );
+        }
+
+
+
+
+
