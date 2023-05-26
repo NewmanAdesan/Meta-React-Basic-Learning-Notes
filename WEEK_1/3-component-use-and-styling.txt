@@ -1,0 +1,111 @@
+
+Principle of Component:
+
+    PRINCIPLE OF COMPONENT ( objectives )
+        - learn about the props object.
+        - learn about how developers use the props object 
+          to pass data from one component to another.
+        - explore component hierarchy, why are they said to have a parent-child structure.
+
+
+
+    PRINCIPLE OF COMPONENT ( props object )
+        - when functional component are utilized with attributes such that 
+          a component calls App and pass in data to it via its attrubute like so;
+                <App title="Welcome" />
+
+        - the key and value of the attributes are passes as arugment
+          to the functional component.
+                function App(props){
+                    console.log(props.title);       // "Welcome"
+                }
+        - it is helpful to think of props as
+          arguments a component can accept and are passed using JSX syntax.
+
+        - because props is essentially a javascript object,
+          attributes can accepts many data types giving developers flexibility
+          when creating and working with components. 
+          especially when you want the flow of data in your app to be dynamic.
+
+
+
+    PRINCIPLE OF COMPONENT ( props object communication )
+        - when two component communicate with each other,
+        - the component sending the props data is known as the parent component
+        - the component receiveing is known as the child component
+
+        - it is not possible for the child component 
+        - to send data back to the parent compoent using props.
+
+        - functions using props are pure functions. 
+        - they must never modify their own props
+
+
+
+
+
+
+
+
+
+
+Additional resources:
+
+    ADDITIONAL RESOURCES ( children property )
+      - theres is a special property which is automaticallly passed to every component.
+      - in JSX Expression that contains both opening and closing tags,
+      - the content btw those tags is passed as into the children property
+      - props.children.
+
+
+    ADDITIONAL RESOURCES ( styling JSX elements )
+      - there are two approaches to styling jsx elements.
+          1.) using the className attribute
+              this works similar to the class attribute in HTML
+
+          2.) using the style attribute, 
+              placing the css properties in a javascript object,
+              passing this object to the styles attribute
+
+
+    ADDITIONAL RESOURCES ( embedded expression )
+      - building React element from html code automatically
+      - allow developers to insert the values of javascript variables
+      - into the html of the resulting react element.
+
+      - Example 1
+            const result = <p>Hello, World</p>;
+            return <div>{result}</div>;
+
+      - Example 2
+            // you can embed output of a function in html
+            <h1>{ formatName("jane", "wilson") }</h1>
+
+      - Example 3
+            // embedding tenary expressions
+            <h1>{ Math.random() >= 0.5 ? "over 0.5 : "under 0.5" }</h1>
+
+      - Example 2
+            // embedding expressions in the attributes
+            <Example
+                toggleBoolean = {!bool}
+                math = {(10 +20)/3}
+                str = {str1 + "another" + "string"}
+            />
+
+
+
+    ADDITIONAL RESOURCES ( note on JSX )
+      - use parenthesis with the return statement
+      - when return multiple lines JSX code
+
+      - the JSX code returned must be wrapped
+      - in a top level element such as a <div>
+      - or a fragment element which is <>
+
+          <>
+            <h1> ... </h1>
+            <h1> ... </h1>
+          </>
+
+    

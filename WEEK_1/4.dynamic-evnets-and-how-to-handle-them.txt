@@ -1,0 +1,164 @@
+
+
+
+React Events
+
+    REACT EVENTS ( events )
+        - event are the process by which javascript interacts with html
+        - and can incur whwen the user or borwser manipulate a page.
+        - they provide enhace interactive experiences such as
+        - responding to mouse clicks, move-events or keyboard 
+        
+
+
+    REACT EVENTS ( react-events )
+        - unlike plain javascript, there is no addEventListener here.
+        - because react wants to avoid directly manipulating the DOM.
+
+        - in react code events are handled using JSX EVENT attribute
+        - which are similar to html event attribute.
+        - with a difference of using camelCase naming.
+        - i.e "onClick" instead of "onclick"
+        
+
+
+    REACT EVENTS ( events grouping )
+        - the event in react can be divided into some groups which include
+            * clipboard events
+            * composition events
+            * keyboard events
+            * mouse events
+            * selection events
+            * touch events
+            * wheel events
+            * animations events
+            * and many more.
+
+        - each group holds several events 
+        - for example lets look at the Mouse Event group attributes
+            * onClick
+            * onContextMenu
+            * onDoubleClick
+            * onDrag
+            * onDrop
+            * onMouseDown
+            * onMouseUp
+            * onMouseEvent
+            * onMouseLeave
+            * onMouseOver
+            * and many more
+
+        - another example is the Clipboard Events group
+            * onCopy
+            * onCut
+            * onPaste
+        
+
+
+    REACT EVENTS ( a simple example )
+
+        function Btn() {
+            const handleClick = ()=>console.log("button clicked");
+            return <button onClick={handleClick}>Click Me</button>
+        }
+
+
+
+
+
+
+
+
+
+
+
+Additional Resources:
+
+    ADDITIONAL RESOURCES ( limitation of props)
+        function modeToggler(){
+            let darkModeOn = true;
+            const darkMode = <h1>Dark Mode is on </h1>;
+            const lightMode = <h1>Light Mode is on </h1>;
+            const handleClick = () => darkMode = !darkMode;
+
+            return (
+                <div>
+                    {darkModeOn ? darkMode : lightMode}
+                    <button onClick={handleClick}>Click Me</button>
+                </div
+            ) 
+        }
+
+        Note that if the button is clicked on the page,
+        the rendered h1 element on the webpage 
+        does not change automatically. 
+        this is the limitation of props and advantage of state.
+
+
+
+    ADDITIONAL RESOURCES ( synthetic events )
+        function Form() {
+            function handleSubmit(e){
+                e.preventDefault();
+                console.log("you clicked submit.");
+            }
+
+            return (
+                <form onSubmit={handleSubmit}>
+                    <button type="submit">Submit</button>
+                </form>
+            )
+        };
+
+        notice the event object "e".
+        this is a synthetic event. react defines this synthetic event. 
+        they do not work exactly as native events.
+
+
+
+    ADDITIONAL RESOURCES ( spreading attribute )
+        function App1(){
+            const props = {firstname:"Ben", lastname:"Hector"}
+            return <Greeting {...props} />
+        }
+
+        this is very interesting!!!!!!
+
+
+
+    ADDITIONAL RESOURCES ( javascript as children )
+        function Item(props){
+            return <li>{props.message}</li>
+        }
+
+
+        function TodoList(){
+            const todos = ['finish doc', 'submit pr', ... ]
+            return (
+                <ul>
+                    {
+                        todos.map( message => 
+                            <Item key={Date.now()} message={message} />
+                        )
+                    }
+                </ul>
+            )
+        }
+
+
+
+    ADDITIONAL RESOURCES ( boolean, null & undefined are ignored )
+        - "false", "null", "undefined" and "true are valid children
+        - but they simple do not render. i.e
+          <div></div>  is equivalent to <div>{true}</div>
+
+        - they can be useful to conditonally render React element
+            <div>
+                {showHeader && <Header/>}
+                <Content />
+            </div>
+            where showHeader is a boolean variables
+        - if you want this types of values to show,
+        - simply convert them to strings.
+       
+    
