@@ -161,4 +161,56 @@ Additional Resources:
         - if you want this types of values to show,
         - simply convert them to strings.
        
-    
+
+
+
+    ADDITIONAL RESOURCES ( delay in event handling )
+        - if you have an event handler such as onClick
+        - and you want to prevent the callback
+        - from being fired too quickly, then
+        - you can limit the rate at which the callback is executed
+
+        - This can be done easily using the following techniques
+        - throttling
+        - debouncing
+        - requestAnimationFrame
+        - more on this techniques at the documentation
+       
+
+
+
+    ADDITIONAL RESOURCES ( peeking into class component )
+        class Toggle extends React.Component {
+            construtor(props){
+                super(props);
+                this.state = {isToggleOn: true};
+                this.handleClick = this.handleClick.bind(this);
+            }
+
+            handleClick(){
+                this.setState(prevState=>{
+                    this.state = {isToggleOn: !prevState.isToggleOn};
+                })
+            }
+
+            render(){
+                return (
+                    <button onClick={this.handleClick}>
+                        {this.state.isToggleOn ? 'ON' : 'OFF'}
+                    </button>
+                )
+            }
+        }
+       
+
+
+
+    ADDITIONAL RESOURCES ( passing extra arguments to event handlers )
+        <button onClick={ (e) => this.deleteRow(id, e) }
+            Delete Row
+        </button>
+
+
+        <button onClick={ this.deleteRow.bind(this, e) }
+            Delete Row
+        </button>

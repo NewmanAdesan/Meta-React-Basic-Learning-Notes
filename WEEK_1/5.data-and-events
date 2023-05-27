@@ -1,0 +1,260 @@
+
+
+Data in React
+    - al the data in React can be divided into:
+    - props data & states data
+
+    - props data is data outside the components 
+    - that it receives and works with but connot mutate.
+    - states data is data inside the components
+    - that it controls and can mutate.
+
+    - prop data belongs to the parent that renders the component,
+    - state data belongs to the componentn itself.
+
+    - props data flow from parent to child component using props,
+    - helps avoid the need to change the data in several places.
+    - instead you make the changes at the data source 
+    - and the update will be applied to the children 
+    - since they accept that data through a property.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Hooks:
+
+    HOOKS ( what are hooks )
+        - keeping track of state across components can become quite a task,
+        - this is where react's hooks can help.
+
+        - hooks are functions that were introduced in React v16.8
+        - they let you hook into React state & lifestyles features
+          of a component.
+
+
+
+    HOOKS ( useState hook )
+        - lets observe the useState hook built into React.
+        - step 1: import the useState function
+          import React, {useState} from "react";
+        - step 2: declare a state variable
+          const [state, setState] = useState(initialState)
+
+            
+            ...
+            const [showMenu, setShowMenu] = useState(false);
+            const handleClick = () => setShowMenu(!showMenu);
+            return (
+                <Child1 
+                    showMenu={showMenu} 
+                    onClick={handleClick}
+                />
+            );
+
+        
+        - the initial state of the state variable can be any datatype.
+        - to change the state of showMenu to true, 
+        - use the setShowMenu function: setShowMenu(true)
+
+        - in addition to the hooks that comes with React,
+        - you can also build your own hooks,
+        - which lets you extract custom component logic into reusable functions.
+
+
+
+    HOOKS ( examples )
+        EXAMPLE 1
+            import {useState} from 'react';
+
+            function InputComponent(){
+                const [inputText, setText] = useState('hello');
+                function handleChange(e){
+                    setText(e.target.value);
+                })
+
+                return (
+                    <>
+                        <input value={inputText} onChange={handleChange} />
+                        <p>You Types: {inputText}</p>
+                        <button onClick={ ()=>setText("hello") }>
+                            Reset
+                        </button>
+                    </>
+                )
+            }
+
+            - the key concepts here is showing one way of
+            - setting up a communication btw a state and a DOMElement
+            - there are other ways e.g Element Referencing concept in React
+              (coming soon)
+
+        
+        EXAMPLE 2
+            function RegisterForm() {
+                const [form, setForm] = useState({
+                    firstName: "Luke",
+                    lastName: "Jones",
+                    email: "lukeJones@sculpture.com"
+                });
+
+                return (
+                    <>
+                        /* first Name form field */
+                        <label>
+                            Firstname:
+                            <input
+                                value={form.firstName}
+                                onChange = {(e)=>{
+                                    setForm(
+                                        {...form, firstName:e.target.value}
+                                    )
+                                }}
+                        </label>
+
+
+                        /* last name form field */
+                        <label>
+                            Lastname:
+                            <input
+                                value={form.lastName}
+                                onChange = {(e)=>{
+                                    setForm(
+                                        {...form, lastName:e.target.value}
+                                    )
+                                }}
+                        </label>
+
+                        /* email form field */
+                        <label>
+                            ...
+                        </label>
+                    </>
+                )
+            }
+
+
+
+    HOOKS ( custom hooks )
+        - in addition to the useState hooks,
+        - there are other hooks that come in handy
+        - "useContext", "useMemo", "useRef"
+
+        - when you need to share logic 
+        - and reuse the same logic across several component, 
+        - you can extract the logic into a custom hook
+
+        - custom hook offer flexibility 
+        - and can be used for a wide range of use-cases such as
+        - form handling, animation, timers & many more.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+State:
+
+    STATE ( what is state )
+        - it helps to think of state as a component's internal data 
+        - that determines the current behaviour of the component.
+        
+        - it is often used to store data 
+        - that affects the behaviour of a component.
+
+        - state is important because 
+        - it allows components to stay in sync with each other.
+        
+        - if one component updat its state, all other component 
+        - that depends on that state will automatically update too.
+        - that means that a component sends its state
+
+        - a component can either be stateful or stateless.
+          the name explains the difference.
+
+
+
+    STATE ( what is state 2 )
+        - WHY DO WE USE STATE IN REACT?
+        - because its one way to deal with data in our react app.
+        - it is a powerful tool used to manage data 
+        - that is likely to change in an application.
+
+        - the states data is internal to the component itself.
+        - this allows the components to re-render based on
+        - the changes in the states data & present the newest update to the user.
+
+
+
+    STATE ( hooks & state )
+        - when using the useState hook, 
+        - you cannot use the setting state function 
+        - directly inside a component.
+
+        - you use this function either through an event handling attribute
+        - or some other approaches, but not directly.
+
+            function App() {
+                const [word, setWord] = useState("cat");
+
+                // this line leads to error
+                // setWord("Drink") 
+
+                return (
+                    <div>
+                        ...
+                    </div>
+                )
+            }
+
+        - we would discuss other approaches by which you can call 
+        - the useState hook setting state functin later.
+
+
+
+    STATE ( managing state - siblings communication )
+        - as react applications grow in complexity,
+        - so too can the comoplexity of managing state across component.
+        - let's look at a scenario
+
+          <parent> 
+            <childA/> 
+            <childB> 
+          </parent>
+
+        - suppose childA has a state & childB depends on that state,
+        - how is childB going to access that state
+
+        - there two solutions we can explore:
+            1.) state lifting & prop drilling
+            2.) react context api
+            3.) using a state management library like REDUX
+                to avoid excessive prop drilling.
+
+
+    
