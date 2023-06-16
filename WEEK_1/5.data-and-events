@@ -1,7 +1,7 @@
 
 
 Data in React
-    - al the data in React can be divided into:
+    - all the data in React can be divided into:
     - props data & states data
 
     - props data is data outside the components 
@@ -237,15 +237,37 @@ State:
 
 
 
-    STATE ( managing state - siblings communication )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Managing State:
+
+    MANAGING STATE ( siblings communication )
         - as react applications grow in complexity,
         - so too can the comoplexity of managing state across component.
         - let's look at a scenario
 
-          <parent> 
-            <childA/> 
-            <childB> 
-          </parent>
+            function Parent(){
+                ...
+                return (
+                    <div>
+                        <childA /> 
+                        <childB /> 
+                    </div>
+                )
+            }
 
         - suppose childA has a state & childB depends on that state,
         - how is childB going to access that state
@@ -255,6 +277,601 @@ State:
             2.) react context api
             3.) using a state management library like REDUX
                 to avoid excessive prop drilling.
+
+
+
+    MANAGING STATE ( state lifting & prop drilling solution )
+        - lets look at this solution step by step
+
+        - step 1: identify the shared state
+        - step 2: find the nearest common ancestor
+        - step 3: lift the state & state-modifying functions up 
+
+        - lets talk about step 3
+        - we mean to move them from the lower-levels components 
+        - to the common ancestor component. this involves
+            1. creating the state & functions in the common ancestor
+            2. passing the state values as props to the lower level component
+            3. passing the state-modigying function as callbacks to the lower level component 
+               such that through this callbacks, the lower levell component can update the state
+
+        - the idea of prop drilling is that 
+        - the lifted state is passed down a very deep hierarchy
+        - to the child, grand-child, great-grand-child, great-great-grand child e.t.c
+
+        - prop drilling can become complex & less maintainable
+        - as hierarchy grows, giving cumbersome design
+
+
+                import React, {useState} from "react"
+                const Parent = () => {
+                    const [sharedState, setSharedState] = useState("");
+                    const handleStateChange = (newValue) => {
+                        setSharedState(newValue);
+                    }
+                    return (
+                        <div>
+                            <ChildA sharedState = {sharedState}
+                                    onStateChange = {handleStateChange} />
+                            <ChildB sharedState = {sharedState}
+                                    onStateChange = {handleStateChange} />
+                        </div>
+
+                    );
+                }
+
+
+
+    MANAGING STATE ( react context api solution )
+
+                import React, {createContext, useState} from "react";
+                const SharedStateContext = createContext();
+
+                const Parent = () => {
+                    const [sharedState, setSharedState] = useState("");
+                    return (
+                        <SharedStateContext.Provider value={{sharedState, setSharedState}}>
+                            <div>
+                                <ChildA />
+                                <ChildB />
+                            </div>
+                        </SharedStateContext.Provider>
+                    )
+
+                }
+
+                const ChildA = () => {
+                    const {sharedState, setSharedState} = useContext(SharedStateContext);
+                    // ...
+                }
+
+                const ChildB = () -> {...}
+
+
+
+    MANAGING STATE ( react context api solution )
+        src/
+            component/
+                Counter.js
+                MealsList.js
+            providers/
+                MealsProvider.js
+            App.js
+            App.text.js
+            index.css
+            index.js
+            reportWebVitals.js
+            setupTest.js
+
+        
+        App.js
+            import MealsProvider from "./providers/MealsProvider";
+            import MealsList from "./components/MealsList";
+            import Counter from "./components/Counter"
+
+            function App() {
+                return (
+                    <MealsProvider>
+                        <MealsList />
+                        <Counter />
+                    </MealsProvider>
+                )
+            }
+
+            export default MealsProvider;
+
+
+
+        MealsProvider.js
+            import React from 'react';
+
+            const MealsContext = React.createContext();
+            const todaysMeal = ["Baked Beans", "Baked Sweet Potatoes", "Baked Potatoes"];
+
+            const MealsProvider = ({children}) => {
+                const [meals, setMealsList] = React.useState(todaysMeal);
+
+                return (
+                    <MealsContext.Provider value = {{meals}}>
+                        {children}
+                    </MealsContext.Provider>
+                )
+            }
+
+            export const useMealsListContext = () => React.useContext(MealsContext);
+            export default MealsProvider;
+
+
+
+        MealsList.js
+            import {useMealsListContext} from "./providers/MealsProvider";
+            
+            const MealsList = () => {
+                const [meals] = useMealsListContext();
+
+                return (
+                    <div>
+                        <h1> Meals List Context Api </h1>
+                        { meals.map( meal => <h2>{meal}</h2> ) }
+                    </div>
+                )
+            }
+
+            export default MealsList;
+
+
+        
+        Counter.js
+            import {useMealsListContext} from "./providers/MealsProvider";
+            
+            const Counter = () => {
+                const [meals] = useMealsListContext();
+
+                return (
+                    <div>
+                        <h3> Number of meals today: {meals.length} </h3>
+                    </div>
+                )
+            }
+
+            export default Counter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+useReducer Hook:
+
+    USEREDUCER HOOK ( the idea )
+        - think of the useReducer hook as a  superpowered useState hook.
+        - it offers a more flexible state setting function.
+
+        - remember in useState, we have a function already defined "setState"
+        - which simply accepts a new value & changes the "state" to that value.
+
+        - in useReducer, we have the flexibility of HOW our "setState" function
+        - changes the "state" to a particular value.
+
+        - while useState hook starts with an initial state 
+                const [state, setState] = useState(initialState)
+        - the useReducer gets a reducer function in addition to the initial state
+                const [state, setState] = useReducer(reducer, initialState)
+
+
+    USEREDUCER HOOK ( example )
+        - Let's say I have a rideshare app that represents the amount of money in my wallet.
+        - when i go through the action of picking a cutomer, my money go up by 10
+        - when i go through the action of fueling my car, my money go down by 50
+
+            import { useReducer } from "react";
+
+            function reducer(currentState, action) {
+                if (action.type === "ride") return { money: currentState.money + 10 };
+                else if (action.type === "fuel") return { money: currentState.money < 50 ? currentState.money : currentState.money - 50 };
+                else return new Error();
+            }
+
+            function App() {
+                const initialState = { money: 100 };
+                const [state, dispatch] = useReducer(reducer, initialState);
+
+                return (
+                    <div>
+                    <h1>Wallet: {state.money}</h1>
+                    <div>
+                        <button
+                        onClick={() => dispatch({ type: "ride" })}>
+                        pick a customer
+                        </button>
+                        <button
+                        onClick={() => dispatch({ type: "fuel" })}>
+                        refill tank
+                        </button>
+                    </div>
+                    </div>
+                );
+            }
+
+            export default App
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Stateful vs Stateless:
+
+    - stateful component holds states as internal data 
+    - and its state changes based on the way that the app is built; 
+    - often as a result of user actions.
+    
+    - stateless component however, doesn't store states 
+    - and any changes must be inherited through props.
+
+    - use stateless components when your component 
+    - doesn't need to maintain its own state in order to work. 
+    - use stateful components when your component 
+    - does need to maintain its own state in order to work.
+
+    - a common approach for organizing components in React 
+    - is to have a stateful component as the parent 
+    - which then sends its states down to several stateless components 
+    - that then receive the state and render it on the screen. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Additional Resources:
+
+
+    ADDITIONAL RESOURCES ( rendering a component at interval )
+
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+
+            function Clock(props) {
+                return (
+                    <div>
+                    <h1>Hello, world!</h1>
+                    <h2>It is {props.date.toLocaleTimeString()}.</h2>
+                    </div>
+                );
+            }
+
+            function tick() {
+                root.render(<Clock date={new Date()} />);
+            }
+
+            setInterval(tick, 1000);
+
+
+
+    ADDITIONAL RESOURCES ( conversion to  class compoent )
+        - create an ES6 class, with the same name, that extends React.Component.
+        - add a single empty method to it called render().
+        - move the body of the function into the render() method.
+        - replace props with this.props in the render() body.
+        - delete the remaining empty function declaration.
+
+                class Clock extends React.Component {
+                    render() {
+                        return (
+                        <div>
+                            <h1>Hello, world!</h1>
+                            <h2>It is {this.props.date.toLocaleTimeString()}.</h2>
+                        </div>
+                        );
+                    }
+                }
+
+
+
+    ADDITIONAL RESOURCES ( using lifecycle methods for compact design )
+
+        - we want to set up a timer whenever the Clock is rendered to the DOM for the first time. 
+        - this is called “mounting” in React. "componentDidMount" is a special method on the component class
+        - to run some code when a component mounts.
+
+                componentDidMount(){
+                    this.timerID = setInterval(()=>this.tick, 1000)
+                }
+
+        - we also want to clear that timer whenever the DOM produced by the Clock is removed. 
+        - this is called “unmounting” in React. "componentWillUnmount" is a special method on the component class
+        - to run some code when a component mounts.
+
+                componentWillUnmout(){
+                    clearInterval(this.timerID);
+                }
+
+        - while this.props is set up by React itself and this.state has a special meaning, 
+        - you are free to add additional fields to the class manually 
+        - if you need to store something that doesn’t participate in the data flow (like a timer ID).
+
+
+
+    ADDITIONAL RESOURCES ( using lifecycle methods for compact design )
+
+        STEP 1
+            - when <Clock /> is passed to root.render(), 
+            - React calls the constructor of the Clock component. 
+            - since Clock needs to display the current time, 
+            - it initializes this.state with an object including the current time. 
+            - We will later update this state.
+
+        STEP 2
+            - React then calls the Clock component’s render() method. 
+            - this is how React learns what should be displayed on the screen. 
+            - React then updates the DOM to match the Clock’s render output.
+
+        STEP 3
+            - when the Clock output is inserted in the DOM, 
+            - React calls the componentDidMount() lifecycle method. 
+            - Inside it, the Clock component asks the browser 
+            - to set up a timer to call the component’s tick() method once a second.
+
+        STEP 4   
+            - every second the browser calls the tick() method. 
+            - inside it, the Clock component schedules a UI update 
+            - by calling setState() with an object containing the current time. 
+            
+            - thanks to the setState() call, React knows the state has changed, 
+            - and calls the render() method again to learn what should be on the screen. 
+            - this time, this.state.date in the render() method will be different, 
+            - and so the render output will include the updated time. React updates the DOM accordingly.
+
+        STEP 5
+            - if the Clock component is ever removed from the DOM, 
+            - React calls the componentWillUnmount() lifecycle method so the timer is stopped.
+
+
+                class Clock extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = {date: new Date()};
+                }
+
+                componentDidMount() {
+                    this.timerID = setInterval(
+                    () => this.tick(),
+                    1000
+                    );
+                }
+
+                componentWillUnmount() {
+                    clearInterval(this.timerID);
+                }
+
+                tick() {
+                    this.setState({
+                    date: new Date()
+                    });
+                }
+
+                render() {
+                    return (
+                    <div>
+                        <h1>Hello, world!</h1>
+                        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+                    </div>
+                    );
+                }
+                }
+
+                const root = ReactDOM.createRoot(document.getElementById('root'));
+                root.render(<Clock />);
+
+
+
+    ADDITIONAL RESOURCES ( three notes about setState )
+
+        STATE UPDATES MAY BE ASYNCHRONOUS
+            - React may batch multiple setState() calls into a single update for performance.
+            - because this.props and this.state may be updated asynchronously, 
+            - you should not rely on their values for calculating the next state.
+
+                // Wrong
+                this.setState({
+                counter: this.state.counter + this.props.increment,
+                });
+
+                // Correct
+                this.setState((state, props) => ({
+                counter: state.counter + props.increment
+                }));
+
+            - that function will receive the previous state as the first argument, 
+            - and the props at the time the update is applied as the second argument:
+
+        
+        STATE UPDATES ARE MERGED
+            - when you call setState(), 
+            - React merges the object you provide into the current state.
+
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                    posts: [],
+                    comments: []
+                    };
+                }
+
+                componentDidMount() {
+                fetchPosts().then(response => {
+                    this.setState({
+                    posts: response.posts
+                    });
+                });
+
+                fetchComments().then(response => {
+                    this.setState({
+                    comments: response.comments
+                    });
+                });
+                }
+
+        
+        DO NOT CHANGE STATE DIRECTLY
+            // Wrong
+            this.state.comment = 'Hello';
+
+            // Correct
+            this.setState({comment: 'Hello'});
+
+
+
+    ADDITIONAL RESOURCES ( design tip: do not mutate props/state )
+
+        // wrong
+        handleClick() {
+        this.setState(state => ({
+            words: state.words.concat(['marklar'])
+        }));
+        }
+
+        // correct
+        handleClick() {
+        this.setState(state => ({
+            words: [...state, "marklar"]
+        }));
+        }
+
+        // wrong
+        function updateColorMap(colormap) {
+        colormap.right = 'blue';
+        }
+
+        // correct
+        function updateColorMap(colormap) {
+        return Object.assign({}, colormap, {right: 'blue'});
+        }
+
+        // also correct
+        function updateColorMap(colormap) {
+        return {...colormap, right:'blue'};
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Additional Resources:
+
+React can change how you think about the designs you look at and the apps you build. 
+when you build a user interface with React, 
+you will first break it apart into pieces called components. 
+then, you will describe the different visual states for each of your components. 
+finally, you will connect your components together so that the data flows through them. 
+
+in this tutorial, we’ll guide you through 
+the thought process of building a searchable product data table with React.
+
+
+Step 1: Break the UI into a component hierarchy
+    - Start by drawing boxes 
+    - around every component and subcomponent 
+    - in the mockup and naming them.
+
+
+
+Step 2: Build a static version in React
+    - build a version that renders the UI from your data model without adding any interactivity
+    - it’s often easier to build the static version first and add interactivity later.
+
+    - don’t use state at all to build this static version. 
+    - state is reserved only for interactivity, that is, data that changes over time
+
+
+
+Step 3: Find the minimal but complete representation of UI state
+    to make the UI interactive, 
+    you need to let users change your underlying data model. 
+    you will use state for this.
+
+    figure out the absolute minimal representation of the state 
+    your application needs and compute everything else on-demand.
+
+
+    Step 3A
+        Now think of all of the pieces of data in this example application:
+        the original list of products
+        the search text the user has entered
+        the value of the checkbox
+        the filtered list of products
+
+
+    STEP 3B
+        Which of these are state? Identify the ones that are not:
+        does it remain unchanged over time? If so, it isn’t state.
+        is it passed in from a parent via props? If so, it isn’t state.
+        can you compute it based on existing state or props in your component? If so, it definitely isn’t state!
+
+
+    Let’s go through them one by one again:
+    the original list of products is passed in as props, so it’s not state.
+    the search text seems to be state since it changes over time and can’t be computed from anything.
+    the value of the checkbox seems to be state since it changes over time and can’t be computed from anything.
+    The filtered list of products isn’t state because it can be computed by taking the original list of products and filtering it according to the search text and value of the checkbox.
+    This means only the search text and the value of the checkbox are state! Nicely done!
+
+
+
+
+
+
+        
+    
 
 
     
