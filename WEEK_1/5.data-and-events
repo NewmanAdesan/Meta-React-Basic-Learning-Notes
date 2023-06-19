@@ -808,70 +808,96 @@ Additional Resources:
 
 Additional Resources:
 
-React can change how you think about the designs you look at and the apps you build. 
-when you build a user interface with React, 
-you will first break it apart into pieces called components. 
-then, you will describe the different visual states for each of your components. 
-finally, you will connect your components together so that the data flows through them. 
-
-in this tutorial, we’ll guide you through 
-the thought process of building a searchable product data table with React.
-
-
-Step 1: Break the UI into a component hierarchy
-    - Start by drawing boxes 
-    - around every component and subcomponent 
-    - in the mockup and naming them.
+    ADDITIONAL RESOURCES (design thinking - intro)
+        when you build a user interface with React, 
+        you will first break it apart into pieces called components. 
+        then, you will describe the different visual states for each of your components. 
+        finally, you will connect your components together so that the data flows through them. 
 
 
 
-Step 2: Build a static version in React
-    - build a version that renders the UI from your data model without adding any interactivity
-    - it’s often easier to build the static version first and add interactivity later.
-
-    - don’t use state at all to build this static version. 
-    - state is reserved only for interactivity, that is, data that changes over time
+    ADDITIONAL RESOURCES (design thinking - step 1)
+        Break the UI into a component hierarchy
+        start by drawing boxes around every component and subcomponent in the mockup and naming them.
 
 
 
-Step 3: Find the minimal but complete representation of UI state
-    to make the UI interactive, 
-    you need to let users change your underlying data model. 
-    you will use state for this.
+    ADDITIONAL RESOURCES (design thinking - step 2)
+        Build a static version in React
+        build a version that renders the UI from your data model without adding any interactivity
+        it’s often easier to build the static version first and add interactivity later.
 
-    figure out the absolute minimal representation of the state 
-    your application needs and compute everything else on-demand.
-
-
-    Step 3A
-        Now think of all of the pieces of data in this example application:
-        the original list of products
-        the search text the user has entered
-        the value of the checkbox
-        the filtered list of products
-
-
-    STEP 3B
-        Which of these are state? Identify the ones that are not:
-        does it remain unchanged over time? If so, it isn’t state.
-        is it passed in from a parent via props? If so, it isn’t state.
-        can you compute it based on existing state or props in your component? If so, it definitely isn’t state!
-
-
-    Let’s go through them one by one again:
-    the original list of products is passed in as props, so it’s not state.
-    the search text seems to be state since it changes over time and can’t be computed from anything.
-    the value of the checkbox seems to be state since it changes over time and can’t be computed from anything.
-    The filtered list of products isn’t state because it can be computed by taking the original list of products and filtering it according to the search text and value of the checkbox.
-    This means only the search text and the value of the checkbox are state! Nicely done!
+        don’t use state at all to build this static version. 
+        state is reserved only for interactivity, that is, data that changes over time
 
 
 
+    ADDITIONAL RESOURCES (design thinking - step 3)
+        Find the minimal but complete representation of UI state
+
+        Step 3A
+            Now think of all of the pieces of data in this example application:
+            the original list of products
+            the search text the user has entered
+            the value of the checkbox
+            the filtered list of products
+
+        STEP 3B
+            Which of these are state? How Identify the ones that are not:
+            does it remain unchanged over time? If so, it isn’t state.
+            is it passed in from a parent via props? If so, it isn’t state.
+            can you compute it based on existing state or props in your component? If so, it definitely isn’t state!
+
+        the original list of products is passed in as props, so it’s not state.
+        the search text seems to be state since it changes over time and can’t be computed from anything.
+        the value of the checkbox seems to be state since it changes over time and can’t be computed from anything.
+
+        The filtered list of products isn’t state 
+        because it can be computed by taking the original list of products 
+        and filtering it according to the search text and value of the checkbox.
+
+        This means only the search text and the value of the checkbox are state! Nicely done!
 
 
 
+    ADDITIONAL RESOURCES (design thinking - step 3)
+        Identify where your state should live
+
+        1. Identify every component that renders something based on that state.
+        2. Find their closest common parent component
+        3. Decide where the state should live
+            a. Often, you can put the state directly into their common parent.
+            b. You can also put the state into some component above their common parent.
+            c. If you can’t find a component where it makes sense to own the state, 
+            create a new component solely for holding the state 
+            and add it somewhere in the hierarchy above the common parent component.
+        4. Pass the created state as props to the components that would need it
+
+
+
+    ADDITIONAL RESOURCES (design thinking - step 5)
+        Add inverse data flow
+        the state is defined in the parent, 
+        meaning the function to change the state is at the parent,
+
+        therefore will the parent passes the state as prop to its children
+        if the parent also pass the state setting function as prop to it's children.
+        the children can metaphorically send data through to parent through this function.
+
+        the is function defined in the parent, but called in the child   
+
+
+
+    ADDITIONAL RESOURCES ( updating a component )
+        To update a component with new data, two things need to happen:
+           1. Retain the data between renders.
+           2. Trigger React to render the component with new data (re-rendering).
+
+        The useState Hook provides those two things:
+           1. A state variable to retain the data between renders.
+           2. A state setter function to update the variable 
+           and trigger React to render the component again.     
         
-    
 
 
     
