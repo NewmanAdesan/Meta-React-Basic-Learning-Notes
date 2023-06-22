@@ -1,0 +1,128 @@
+
+
+
+Website Navigation (the types):
+
+    WEBSITE NAVIGATION ( types )
+        Website navigation is the parts of any website 
+        that allows you to browse through various pages or links on that website from a single component. 
+
+        Common types of website navigation approaches.
+          * a horizontal navigation bar, 
+          * a vertical navigation menu, 
+          * a menu hiding behind a button, and 
+          * a footer navigation menu. 
+
+
+
+    WEBSITE NAVIGATION ( horizontal navigation bar )
+        the horizontal navigation bar is often referred to as a navbar, and the vertical navigation bar is also known as a sidebar navigation.
+        ()[.\6A-horizontal-navigation-bar.jpg]
+        ()[./6A-vertical-navigation-bar.jpg]
+
+
+
+    WEBSITE NAVIGATION ( menu behind a button )
+        the menu hiding behind the button is usually represented 
+        by an icon that has three horizontal lines 
+        and is thus referred to as the burger icon or the burger menu. 
+        ()[.\6A-menu-hidding-behind-a-button.jpg]
+
+        alternative to this is the drop-down navigation menu, known as the mega menu. 
+        this menu is usually also hiding behind a button and it's usually used 
+        as a sub menu or large menu on e-commerce sites and other sites that require many links. 
+        ()[.\6A-mega-menu.jpg]
+
+
+
+    WEBSITE NAVIGATION ( footer navigation bar )
+        the footer navigation menu is usually displayed as several visual columns containing links.
+        ()[.\6A-footer-navigation-bar.jpg]
+
+
+
+    WEBSITE NAVIGATION ( combining menu patterns )
+        all these mentioned menu patterns 
+        can often be used simultaneously in different parts of the same page. 
+        Additionally, a more complex navigation UI 
+        can include multiple navigation approaches in a single component.
+        for example, an horizontal navigation bar with drop down menu items
+
+
+
+
+
+
+
+
+
+
+Website Navigation (the process):
+
+    WEBSITE NAVIGATION ( combining menu patterns )
+
+   React navigation works a bit differently from navigations built with HTML & CSS. 
+   To help illustrate how React's navigation works, Let's use an elevator analogy
+
+   think about how the buttons on the inside of an elevator work. 
+   Pressing the button will take you to the selected floor. 
+   Similarly, each link on a website takes you to a different page.
+   
+   if however, you're in a React elevator, the elevator never moves. 
+   Instead, when you press a button in this React's elevator, 
+   the entire construction of that given floor is injected into a single floor of the elevator. 
+
+   (ANIMATION)[./6A-react-elevator-slide1.jpg, ./6A-react-elevator-slide2.jpg, ./6A-react-elevator-slide3.jpg ]
+
+   In REACT,  the entire app is loaded inside a single div. 
+   the content of that single div is controlled by React.
+
+   you're not actually visiting different pages like you would with hyperlinks and HTML files. 
+   Instead, it either updates the existing view or loads a completely new view, 
+   giving the user the impression of visiting a completely different URL. 
+
+   This functionality is not available to developers from the React's library itself. 
+   In order to achieve this illusion of a multi-page website, 
+   you need to add the React router library to your React projects. 
+
+
+
+
+
+
+
+
+
+
+A Single Page Application allows the user to interact 
+with the website without downloading entire new webpages. 
+Instead, it rewrites the current webpage as the user interacts with it. 
+The outcome is that the application will feel faster and more responsive to the user.
+
+
+Two Approach to how resource are served in SPA
+complete bundling
+  when the browser requests the application, 
+  return and load all necessary HTML, CSS and JavaScript immediately. This is known as bundling. 
+
+lazy loading
+  when the browser requests the application, 
+  return only the minimum HTML, CSS and JavaScript needed to load the application. 
+  Additional resources are downloaded as required by the application, 
+  for example, when a user navigates to a specific section of the application. 
+  This is known as lazy loading or code splitting. 
+   
+
+Both approaches are valid and are used depending on the size, 
+complexity and bandwidth requirements of the application. 
+
+If your application is complex and has a lot of resources, 
+your bundles will grow quite large and take a long time to download – 
+possibly ending up slower than a traditional web application!
+
+
+
+
+  
+
+
