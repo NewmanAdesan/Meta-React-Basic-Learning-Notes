@@ -57,68 +57,226 @@ Website Navigation (the types):
 
 
 
+
+
+
+
+
+
 Website Navigation (the process):
 
-    WEBSITE NAVIGATION ( combining menu patterns )
+    WEBSITE NAVIGATION ( the elevator analogy part 1 )
+        react navigation works a bit differently from navigations built with HTML & CSS. 
+        To help illustrate how React's navigation works, Let's use an elevator analogy
 
-   React navigation works a bit differently from navigations built with HTML & CSS. 
-   To help illustrate how React's navigation works, Let's use an elevator analogy
+        think about how the buttons on the inside of an elevator work. 
+        Pressing the button will take you to the selected floor. 
+        Similarly, each link on a website takes you to a different page.
+        
+        if however, you're in a React elevator, the elevator never moves. 
+        Instead, when you press a button in this React's elevator, 
+        the entire construction of that given floor is injected into a single floor of the elevator. 
 
-   think about how the buttons on the inside of an elevator work. 
-   Pressing the button will take you to the selected floor. 
-   Similarly, each link on a website takes you to a different page.
-   
-   if however, you're in a React elevator, the elevator never moves. 
-   Instead, when you press a button in this React's elevator, 
-   the entire construction of that given floor is injected into a single floor of the elevator. 
-
-   (ANIMATION)[./6A-react-elevator-slide1.jpg, ./6A-react-elevator-slide2.jpg, ./6A-react-elevator-slide3.jpg ]
-
-   In REACT,  the entire app is loaded inside a single div. 
-   the content of that single div is controlled by React.
-
-   you're not actually visiting different pages like you would with hyperlinks and HTML files. 
-   Instead, it either updates the existing view or loads a completely new view, 
-   giving the user the impression of visiting a completely different URL. 
-
-   This functionality is not available to developers from the React's library itself. 
-   In order to achieve this illusion of a multi-page website, 
-   you need to add the React router library to your React projects. 
+        (ANIMATION)[./6A-react-elevator-slide1.jpg, ./6A-react-elevator-slide2.jpg, ./6A-react-elevator-slide3.jpg ]
 
 
 
+    WEBSITE NAVIGATION ( the elevator analogy part 2 )
 
+        in REACT,  the entire app is loaded inside a single div. 
+        the content of that single div is controlled by React.
 
+        you're not actually visiting different pages like you would with hyperlinks and HTML files. 
+        Instead, it either updates the existing view or loads a completely new view, 
+        giving the user the impression of visiting a completely different URL. 
+
+        This functionality is not available to developers from the React's library itself. 
+        In order to achieve this illusion of a multi-page website, 
+        you need to add the React router library to your React projects. 
 
 
 
 
 
-A Single Page Application allows the user to interact 
-with the website without downloading entire new webpages. 
-Instead, it rewrites the current webpage as the user interacts with it. 
-The outcome is that the application will feel faster and more responsive to the user.
 
 
-Two Approach to how resource are served in SPA
-complete bundling
-  when the browser requests the application, 
-  return and load all necessary HTML, CSS and JavaScript immediately. This is known as bundling. 
 
-lazy loading
-  when the browser requests the application, 
-  return only the minimum HTML, CSS and JavaScript needed to load the application. 
-  Additional resources are downloaded as required by the application, 
-  for example, when a user navigates to a specific section of the application. 
-  This is known as lazy loading or code splitting. 
-   
 
-Both approaches are valid and are used depending on the size, 
-complexity and bandwidth requirements of the application. 
 
-If your application is complex and has a lot of resources, 
-your bundles will grow quite large and take a long time to download – 
-possibly ending up slower than a traditional web application!
+
+
+
+
+
+
+Single Page Application:
+
+    SPA ( the concept )
+        A Single Page Application allows the user to interact 
+        with the website without downloading entire new webpages. 
+        Instead, it rewrites the current webpage as the user interacts with it. 
+        The outcome is that the application will feel faster and more responsive to the user.
+
+
+    SPA ( two approaches )
+        Two Approach to how resource are served in SPA
+        complete bundling
+          when the browser requests the application, 
+          return and load all necessary HTML, CSS and JavaScript immediately. This is known as bundling. 
+
+        lazy loading
+          when the browser requests the application, 
+          return only the minimum HTML, CSS and JavaScript needed to load the application. 
+          Additional resources are downloaded as required by the application, 
+          for example, when a user navigates to a specific section of the application. 
+          This is known as lazy loading or code splitting. 
+          
+        Both approaches are valid and are used depending on the size, 
+        complexity and bandwidth requirements of the application. 
+
+        If your application is complex and has a lot of resources, 
+        your bundles will grow quite large and take a long time to download – 
+        possibly ending up slower than a traditional web application!
+
+
+    SPA ( traditional lifecycle methods VS spa lifecycle methods )
+        [](6B-traditional-lifecycle.jpg)
+        [](6B-spa-lifecycle.jpg)
+
+        In a traditional website, when the button is clicked, 
+        the browser will send a POST request to the web server. 
+        the web server will return a new web page containing the button and movie name, 
+        and the web browser renders the new page.
+
+        In a Single Page Application, when the button is clicked, 
+        the browser will send a POST request to a web server. 
+        The web server will return a JSON object. 
+        The application reads the object and updates the Label with the movie name.
+
+
+    SPA ( single-page application vs multi-page application )
+        In a Single Page Application, different pages are broken into templates (or views). 
+        each view will have HTML code containing variables that can be updated by the application.
+
+        The web browser sends the request to the web server, 
+        and the web server sends back a JSON object. 
+
+        The web browser then updates the web page by inserting the template 
+        with the variables replaced by the values in the JSON object.
+
+
+    SPA ( anchor element in spa )
+        navigation in a single-page app is fundamentally different from its counterpart in a multi-page app. 
+
+        the default behavior of an anchor tag is to load another HTML file from a server and refresh the page.
+
+        a total page refresh is not the way that a SPA works,
+        thus a SPA comes with its own special implementation of anchor tags and links, 
+        which only give an illusion of loading different pages to the end user when in fact, 
+        
+        they simply load different components into a single element of the real DOM 
+        into which the virtual DOM tree gets mounted and updated.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+look at this. 
+function App() {
+  return (
+    <div className="App">
+      <nav className="nav">
+        <a href="#" className="nav-item">Homepage</a>
+        <a href="#" className="nav-item">About Me</a>
+      </nav>
+      <HomePage />
+      <AboutMe />
+    </div>
+
+  )
+}
+
+the anchor tag wont work the way you want is to work because of how REACT renders a webpage
+to have a similar experience that anchor tage in HTML files provide, we use a library called the React Router
+
+React router is a library that gives you more control over the routing of components
+
+Steps (npm i react-router-dom@6)
+Step 0: go to index.js 
+Step 1: import BrowserRouter from react-router-dom
+Step 2: wrap the App component into a BrowserRouter component
+
+Step 3: go to App.js ( the component that renders the navigation )
+Step 4: import Route, Routes & Link form react-router-dom
+Step 5: change <HomePage/> to <Route path="/" element={<HomePage />}
+Step 6: change <AboutMe/> to <Route path="/about-me" element={<AboutMe />}
+Step 7: place the  lines Step 5 & 6 inside a Routes tag 
+Step 8: notice what happens at "localhost:3000/about-me" & "localhost:3000/"
+Step 9: replace the anchor tags in the navigation with the react-router link tag. Use <Link to="/" className="nav-item">HomePage</Link> & <Link to="/about-me" className="nav-item">About Me</Link> instead of the anchor tags.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Conditional Rendering:
+
+react dynamically changes web content, rendering one component instead of another.
+you need to give react specific instructions about what to render and what not to render
+and when you have components that are responsive to events such as clicks, this add another layer of complexity
+
+fortunately, there are several approaches to writing the logic
+to ensure that this process goes smoothly & requires less work from you.
+
+function CurrentMessage({day}) {
+  let work = day>=1 && day<=5;
+  let free = day===6 || day===0;
+  let message = work ? <Workday/> : free ? <Weekday /> : <ErrorComponent />
+
+  return (
+    <div>
+      {message}
+    </div>
+  )
+}
+
+function LogicalExample() {
+  const val = prompt("Anythning but zero")
+  return (
+    <div>
+      <h1>Please do not type in a zero</h1>
+      {val && <h2>Yay, no 0 was typed in</h2> }
+    </div>
+  )
+}
+
+
+
 
 
 
